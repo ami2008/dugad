@@ -1,0 +1,15 @@
+The goal of this application is to embed an invisible watermark into a PGM 
+image using the dugad algorithm. The second goal is to be able to detect that 
+watermark.
+
+The following resources were used to create this code:
+
+  Web:
+    http://www.bearcave.com/misl/misl_tech/wavelets/daubechies
+    http://www.cosy.sbg.ac.at/~pmeerw/Watermarking
+    http://www.docstoc.com/docs/15510189/Wavelet-Based-Solutions-to-the-Digital-Image-Watermarking-Problem
+
+  Books:
+    Numerical Recipes in C, Chapter 13 Section 10 (http://www.nrbook.com/c)
+    Knuth, The Art of Computer Programming, Vol 2, 3rd ed, p122
+
