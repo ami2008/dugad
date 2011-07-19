@@ -7,6 +7,7 @@
  * Date:         Name:            Description:
  * ------------  ---------------  ----------------------------------------------
  * Dec 14, 2010  Dave Pederson    Creation
+ * Jul 19, 2011  Dave Pederson    Code cleanup
  */
 #include <netpbm/pgm.h>
 #include "dugad.h"
@@ -16,33 +17,43 @@ int main(int argc, char *argv[])
     FILE *lena;
     gray maxval, **image;
     int row, rows, cols, format;
-    // Open watermarked PGM
+    int i, j, n, k;
+    unsigned int key = 1292026896;
+
+    // Open input file
     if ((lena = fopen("images/wm.pgm", "rb")) == NULL) {
         fprintf(stderr, "Failed to open PGM image lena_wm.pgm\n");
         exit(1);
     }
+
+    // Initialize and read PGM image
     pgm_init(&argc, argv);
     pgm_readpgminit(lena, &cols, &rows, &maxval, &format);
     image = pgm_allocarray(cols, rows);
     for (row = 0; row < rows; row++) {
         pgm_readpgmrow(lena, image[row], cols, maxval, format);
     }
-    // Generate watermark and copy image matrix into row vector
-    int i, j, k = 0, n = rows * cols;
-    double wm[n], img[n];
-    unsigned int key = 1292026896;
-    dugad_generate_watermark(key, wm, n);
-    for (i = 0; i < rows; i++) {
+
+    // Copy image into buffer
+    n = rows * cols;
+    double buffer[n];
+    for (i = 0, k = 0; i < rows; i++) {
         for (j = 0; j < cols; j++) {
-            img[k++] = image[i][j];
+            buffer[k++] = image[i][j];
         }
     }
-    // Look for watermark in image
-    if (dugad_detect_watermark(img, wm, n)) {
+
+    // Generate watermark
+    double wm[n];
+    dugad_generate_watermark(key, wm, n);
+
+    // Look for watermark in buffer
+    if (dugad_detect_watermark(buffer, wm, n)) {
         printf("Image DOES contain watermark\n");
     } else {
         printf("Image does NOT contain watermark\n");
     }
+
     // Cleanup
     fclose(lena);
     pgm_freearray(image, rows);

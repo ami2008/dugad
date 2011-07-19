@@ -1,6 +1,5 @@
-The goal of this application is to embed an invisible watermark into a PGM 
-image using the dugad algorithm. The second goal is to be able to detect that 
-watermark.
+The goal of this application is to embed / detect an invisible watermark into a PGM 
+image using the "dugad" algorithm.
 
 The following resources were used to create this code:
 
