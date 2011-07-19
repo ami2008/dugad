@@ -13,6 +13,7 @@
 #define _DUGAD_H_
 
 #include <math.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include "wavelet.h"
