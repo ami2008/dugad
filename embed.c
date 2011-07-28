@@ -7,6 +7,7 @@
  * Date:         Name:            Description:
  * ------------  ---------------  ----------------------------------------------
  * Dec 14, 2010  Dave Pederson    Creation
+ * Jul 19, 2011  Dave Pederson    Code cleanup
  */
 #include <netpbm/pgm.h>
 #include "dugad.h"
@@ -16,15 +17,21 @@ int main(int argc, char *argv[])
     FILE *lena, *lena_out;
     gray maxval, **image;
     int row, rows, cols, format;
+    int i, j, k, n;
+    unsigned key = 1292026896;
+    double data = 0.0;
+
     // Open input and output image files
     if ((lena = fopen("images/lena.pgm", "rb")) == NULL) {
         fprintf(stderr, "Failed to open PGM image lena.pgm\n");
         exit(1);
     }
     if ((lena_out = fopen("images/wm.pgm", "wb")) == NULL) {
+        fclose(lena);
         fprintf(stderr, "Failed to open PGM image lena_wm.pgm\n");
         exit(1);
     }
+
     // Initialize and read input PGM image
     pgm_init(&argc, argv);
     pgm_readpgminit(lena, &cols, &rows, &maxval, &format);
@@ -32,31 +39,35 @@ int main(int argc, char *argv[])
     for (row = 0; row < rows; row++) {
         pgm_readpgmrow(lena, image[row], cols, maxval, format);
     }
-    // Generate watermark and copy image matrix into row vector
-    int i, j, k = 0, n = rows * cols;
-    double wm[n], img[n];
-    unsigned int key = 1292026896;
+
+    // Copy image into buffer
+    n = rows * cols;
+    double buffer[n];
+    for (i = 0, k = 0; i < rows; i++) {
+        for (j = 0; j < cols; j++) {
+            buffer[k++] = image[i][j];
+        }
+    }
+
+    // Generate and embed watermark
+    double wm[n];
     dugad_generate_watermark(key, wm, n);
-    for (i = 0; i < rows; i++) {
+    dugad_embed_watermark(buffer, wm, n);
+
+    // Write watermarked buffer into PGM image
+    for (i = 0, k = 0; i < rows; i++) {
         for (j = 0; j < cols; j++) {
-            img[k++] = image[i][j];
+            data = buffer[k++];
+            image[i][j] = data > 255 ? 255 : data < 0 ? 0 : data;
         }
     }
-    // Embed watermark
-    dugad_embed_watermark(img, wm, n);
-    k = 0;
-    double imgk = 0.0;
-    for (i = 0; i < rows; i++) {
-        for (j = 0; j < cols; j++) {
-            imgk = img[k++];
-            image[i][j] = imgk > 255 ? 255 : imgk < 0 ? 0 : imgk;
-        }
-    }
-    // Write output PGM image
+
+    // Write watermarked image to output file
     pgm_writepgminit(lena_out, cols, rows, maxval, 0);
     for (row = 0; row < rows; row++) {
         pgm_writepgmrow(lena_out, image[row], cols, maxval, 0);
     }
+
     // Cleanup
     fclose(lena);
     fclose(lena_out);
