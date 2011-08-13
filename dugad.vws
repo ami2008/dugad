@@ -1,0 +1,31 @@
+
+" Vim workspace file. This file is auto-generated.
+let ws_entry_count = 3
+let ws_entry_0_name = 'src'
+let ws_entry_0_type = 'group'
+let ws_entry_0_count = 6
+let ws_entry_0_0_name = '/home/dave/development/github/dugad/daub.h'
+let ws_entry_0_0_type = 'file'
+let ws_entry_0_1_name = '/home/dave/development/github/dugad/wavelet.h'
+let ws_entry_0_1_type = 'file'
+let ws_entry_0_2_name = '/home/dave/development/github/dugad/dugad.h'
+let ws_entry_0_2_type = 'file'
+let ws_entry_0_3_name = '/home/dave/development/github/dugad/embed.c'
+let ws_entry_0_3_type = 'file'
+let ws_entry_0_4_name = '/home/dave/development/github/dugad/detect.c'
+let ws_entry_0_4_type = 'file'
+let ws_entry_0_5_name = '/home/dave/development/github/dugad/compare.c'
+let ws_entry_0_5_type = 'file'
+let ws_entry_1_name = 'scripts'
+let ws_entry_1_type = 'group'
+let ws_entry_1_count = 2
+let ws_entry_1_0_name = '/home/dave/development/github/dugad/build.sh'
+let ws_entry_1_0_type = 'file'
+let ws_entry_1_1_name = '/home/dave/development/github/dugad/clean.sh'
+let ws_entry_1_1_type = 'file'
+let ws_entry_2_name = 'doc'
+let ws_entry_2_type = 'group'
+let ws_entry_2_count = 1
+let ws_entry_2_0_name = '/home/dave/development/github/dugad/README'
+let ws_entry_2_0_type = 'file'
+
