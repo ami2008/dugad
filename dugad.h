@@ -71,7 +71,7 @@ static int dugad_embed_watermark(double *img, double *wm, int n)
         return 0;
     }
     // Apply the watermark to coefficients
-    int i; for (i = n >> 1; i < n; ++i) {
+    int i; for (i = n >> 3; i < n; ++i) {
         if (img[i] > T1) {
             img[i] += (ALPHA * fabs(img[i]) * wm[i]);
         }
@@ -104,7 +104,7 @@ static int dugad_detect_watermark(double *img, double *wm, int n)
     // Determine number of matches, threshold sum and correlation sum
     double s, z, ssum, zsum;
     s = z = ssum = zsum = 0.0;
-    int i, m; for (i = n >> 1, m = 0; i < n; ++i) {
+    int i, m; for (i = n >> 3, m = 0; i < n; ++i) {
         if (tmp[i] > T2) {
             ssum += fabs(tmp[i]);
             zsum += tmp[i] * wm[i];
