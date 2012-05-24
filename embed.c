@@ -9,7 +9,8 @@
  * Dec 14, 2010  Dave Pederson    Creation
  * Jul 19, 2011  Dave Pederson    Code cleanup
  */
-#include <netpbm/pgm.h>
+#include <pgm.h>
+//#include <netpbm/pgm.h>
 #include "dugad.h"
 
 int main(int argc, char *argv[])
